@@ -15,13 +15,13 @@ const PersonalInfo = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    if(value.steps==="Inactive"){
-        value.setsteps("active");
-    }
+    console.log("Current Step-",value.steps)
+    value.setsteps((prev) => prev + 1);
+    console.log("Next Step-",value.steps);
   };
   return (
     <>
-      <div className="p-[3rem] w-[565px] h-[565px] m-[1rem] rounded-2xl">
+      <div className={value.steps===1?"p-[3rem] w-[565px] h-[565px] m-[1rem] rounded-2xl":"hidden"}>
         <div>
           <p className="ubuntu-bold text-3xl text-[#02295a]">Personal info</p>
           <p className="ubuntu-regular text-[#9699ab]">
@@ -129,6 +129,7 @@ const PersonalInfo = () => {
             <input
               className="ubuntu-regular w-[100px] bg-[#02295a] hover:bg-[#473dff] text-white p-[0.5rem] rounded-lg border-none my-[4rem] cursor-pointer"
               type="submit"
+              value="Next Step"
             />
           </div>
         </form>

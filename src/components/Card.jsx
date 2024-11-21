@@ -1,6 +1,7 @@
 import React from "react";
 import SideBar from "./SideBar";
 import PersonalInfo from "./PersonalInfo";
+import Plan from "./Plan";
 
 const Card = () => {
 
@@ -11,7 +12,7 @@ const Card = () => {
 
       {/* Right box which consist of different content  */}
       <PersonalInfo/>
-      
+      <Plan/>
     </div>
   );
 };

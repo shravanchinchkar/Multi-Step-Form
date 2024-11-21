@@ -34,12 +34,12 @@ const SideBar = () => {
         <div className="flex flex-col gap-[1.5rem]">
           {sideBarObject.map((item) => {
             return (
-              <div className="flex items-center gap-[20px] ">
+              <div className="flex items-center gap-[20px]" key={item.value}>
                 <div
                   className={
-                    value.steps === "active"
+                    value.steps === item.value
                       ? "w-[35px] h-[35px] rounded-[50%] bg-[#bfe2fd] flex justify-center items-center ubuntu-medium"
-                      : ""
+                      : "w-[35px] h-[35px] rounded-[50%] text-white border-[1px] flex justify-center items-center ubuntu-medium"
                   }
                 >
                   {item.value}

@@ -2,6 +2,7 @@ import React from "react";
 import SideBar from "./SideBar";
 import PersonalInfo from "./PersonalInfo";
 import Plan from "./Plan";
+import AddOns from "./AddOns";
 
 const Card = () => {
 
@@ -13,6 +14,7 @@ const Card = () => {
       {/* Right box which consist of different content  */}
       <PersonalInfo/>
       <Plan/>
+      <AddOns/>
     </div>
   );
 };

@@ -51,6 +51,7 @@ const Plan = () => {
             : "hidden"
         }
         // className="p-[3rem] w-[565px] h-[565px] m-[1rem] rounded-2xl"
+      
       >
         {/* Heading */}
         <div>
@@ -69,7 +70,7 @@ const Plan = () => {
               return (
                 <button
                   className={
-                    item.planName===planSelected
+                    item.planName === planSelected
                       ? "flex flex-col justify-between w-[140px] h-[160px] rounded-lg border-[1px] border-[#473dff] bg-[#fafbff] cursor-pointer"
                       : "flex flex-col justify-between w-[140px] h-[160px] rounded-lg border-[1px] hover:border-[#473dff] cursor-pointer"
                   }
@@ -86,9 +87,19 @@ const Plan = () => {
                       {item.planName}
                     </p>
                     <p className="ubuntu-medium text-[#9699ab] text-[13px]">
-                      {value.toggle==="left"?`${item.amountPerMonth}`:`${item.amountPerYear}`}
+                      {value.toggle === "left"
+                        ? `${item.amountPerMonth}`
+                        : `${item.amountPerYear}`}
                     </p>
-                    <p className={value.toggle==="right"?"ubuntu-medium text-[#02295a] text-[13px]":"hidden"}>2 months free</p>
+                    <p
+                      className={
+                        value.toggle === "right"
+                          ? "ubuntu-medium text-[#02295a] text-[13px]"
+                          : "hidden"
+                      }
+                    >
+                      2 months free
+                    </p>
                   </div>
                 </button>
               );
@@ -98,7 +109,13 @@ const Plan = () => {
           {/* Toggle button and other stuff */}
           <div className="bg-[#fafbff] mt-[2rem] p-[0.5rem] rounded-md">
             <div className="flex justify-between m-auto w-[200px]">
-              <p className="flex justify-center items-center ubuntu-medium text-[#02295a]">
+              <p
+                className={
+                  value.toggle === "left"
+                    ? "flex justify-center items-center ubuntu-medium text-[#02295a]"
+                    : "flex justify-center items-center ubuntu-medium text-[#9699ab]"
+                }
+              >
                 Monthly
               </p>
               <div
@@ -117,7 +134,13 @@ const Plan = () => {
                   alt="toggle-right"
                 />
               </div>
-              <p className="flex justify-center items-center ubuntu-medium text-[#9699ab]">
+              <p
+                className={
+                  value.toggle === "right"
+                    ? "flex justify-center items-center ubuntu-medium text-[#02295a]"
+                    : "flex justify-center items-center ubuntu-medium text-[#9699ab]"
+                }
+              >
                 Yearly
               </p>
             </div>

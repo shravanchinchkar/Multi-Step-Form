@@ -4,7 +4,8 @@ import Footer from "./Footer";
 
 const AddOns = () => {
   const value = useContext(cardContext);
-  const [selectedAddOns, setselectedAddOns] = useState("");
+  const [selectedAddOns, setselectedAddOns] = useState([]);
+  console.log("type of selectedAddOns:",typeof selectedAddOns)
   const addons = [
     {
       addOnName: "Online Service",
@@ -26,7 +27,17 @@ const AddOns = () => {
     },
   ];
   const handleAddOns = (e) => {
-    setselectedAddOns(e.currentTarget.id);
+    const id=e.currentTarget.id; //selected id
+    setselectedAddOns((prevSelectedAddOns)=>{
+      //check if the selected id is already present in the array
+      if(prevSelectedAddOns.includes(id)){
+        return prevSelectedAddOns.filter((items)=>items!==id) // if present remove it
+      }
+      else{
+        return [...prevSelectedAddOns,id] //if not add it
+      }
+    })
+    console.log("SelectedAddOns updated");
   };
   return (
     <>
@@ -52,7 +63,7 @@ const AddOns = () => {
             return (
               <button
                 className={
-                  selectedAddOns === items.addOnName
+                  selectedAddOns.includes(items.addOnName)
                     ? "border-[1px]  border-[#473dff] bg-[#fafbff] cursor-pointer rounded-lg flex p-[1rem] justify-between items-center"
                     : "border-[1px] border-[#d6d9e6] hover:border-[#473dff] cursor-pointer rounded-lg flex p-[1rem] justify-between items-center"
                 }
@@ -63,7 +74,7 @@ const AddOns = () => {
                 {/* Check/unCheck section */}
                 <div
                   className={
-                    selectedAddOns === items.addOnName
+                    selectedAddOns.includes(items.addOnName)
                       ? "bg-[#473dff] w-[25px] h-[25px] rounded-md flex justify-center items-center"
                       : "w-[25px] h-[25px] rounded-md flex justify-center items-center"
                   }
@@ -71,7 +82,7 @@ const AddOns = () => {
                   <img
                     src="./assets/images/icon-checkmark.svg"
                     alt="checkmark"
-                    className={selectedAddOns===items.addOnName?"block":"hidden"}
+                    className={selectedAddOns.includes(items.addOnName)?"block":"hidden"}
                   />
                 </div>
 
@@ -94,7 +105,7 @@ const AddOns = () => {
               </button>
             );
           })}
-          <Footer/>
+          <Footer selectedAddOns={selectedAddOns}/>
         </div>
       </div>
     </>

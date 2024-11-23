@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import PersonalInfo from "./PersonalInfo";
 import Plan from "./Plan";
 import AddOns from "./AddOns";
+import FinishingUp from "./FinishingUp";
 
 const Card = () => {
 
@@ -15,6 +16,7 @@ const Card = () => {
       <PersonalInfo/>
       <Plan/>
       <AddOns/>
+      <FinishingUp/>
     </div>
   );
 };

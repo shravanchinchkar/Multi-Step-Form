@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
 import { cardContext } from "../context/context";
 
-const Footer = () => {
+const Footer = ({selectedAddOns}) => {
   const value = useContext(cardContext);
   const handleBack = () => {
     value.setsteps((prev) => prev - 1);
   };
   const handleFront = () => {
-    value.setsteps((prev) => prev + 1);
+    if(selectedAddOns.length===0){
+      alert("Please select atleast one addons")
+    }
+    else{
+      value.setsteps((prev) => prev + 1);
+    }
   };
   return (
     <>

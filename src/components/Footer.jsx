@@ -7,7 +7,10 @@ const Footer = ({selectedAddOns}) => {
     value.setsteps((prev) => prev - 1);
   };
   const handleFront = () => {
-    if(selectedAddOns.length===0){
+    if(value.steps===2){
+      value.setsteps((prev) => prev + 1);
+    }
+    else if(selectedAddOns.length===0 ){
       alert("Please select atleast one addons")
     }
     else{
@@ -27,7 +30,7 @@ const Footer = ({selectedAddOns}) => {
           className="ubuntu-regular w-[100px] bg-[#02295a] hover:bg-[#473dff] text-white p-[0.5rem] rounded-lg"
           onClick={handleFront}
         >
-          Next Step
+          {value.steps<4?"Next Step":"Confirm"}
         </button>
       </div>
     </>

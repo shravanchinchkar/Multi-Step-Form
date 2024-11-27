@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { cardContext } from "../context/context";
 import Footer from "./Footer";
 
 const AddOns = () => {
   const value = useContext(cardContext);
   const [selectedAddOns, setselectedAddOns] = useState([]);
-  console.log("type of selectedAddOns:",typeof selectedAddOns)
+
   const addons = [
     {
       addOnName: "Online Service",
@@ -26,6 +26,7 @@ const AddOns = () => {
       addOnsPricePerYear:"+$20/yr"
     },
   ];
+
   const handleAddOns = (e) => {
     const id=e.currentTarget.id; //selected id
     setselectedAddOns((prevSelectedAddOns)=>{
@@ -39,6 +40,14 @@ const AddOns = () => {
     })
     console.log("SelectedAddOns updated");
   };
+
+  useEffect(() => {
+    const finalAddOns=addons.filter((item)=>{
+      return selectedAddOns.includes(item.addOnName)
+    })
+    value.setfinalAddons(finalAddOns);
+  }, [selectedAddOns])
+  
   return (
     <>
       <div

@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext, useState,useEffect } from "react";
 import { cardContext } from "../context/context";
 import Footer from "./Footer";
 
@@ -13,10 +13,6 @@ const Plan = () => {
     } else {
       value.settoggle("left");
     }
-  };
-
-  const handleClick = (e) => {
-    setplanSelected(e.currentTarget.id);
   };
 
   const plans = [
@@ -42,6 +38,29 @@ const Plan = () => {
       message: "2 months free",
     },
   ];
+
+  useEffect(() => {
+    const selectedPlan=plans.filter((item)=>{
+      return item.planName===planSelected
+    })
+    value.settotalBill(selectedPlan);
+  },[planSelected])
+  
+
+  const totalBill=[{
+    planName:"Arcade",
+    planDuration:"Monthly",
+    planAmount:"$9/mo",
+    addOnsOne:"online Service",
+    addOnePrice:"+$1/mo",
+    addOnsTwo:"Larger Storage",
+    addOnsTwoPrice:"+$2/mo"
+  }]
+
+  const handleClick = (e) => {
+    setplanSelected(e.currentTarget.id);
+  };
+
   return (
     <>
       <div
@@ -146,7 +165,7 @@ const Plan = () => {
             </div>
           </div>
 
-          <Footer />
+          <Footer/>
         </div>
       </div>
     </>

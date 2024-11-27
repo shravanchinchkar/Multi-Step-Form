@@ -1,9 +1,75 @@
 import React, { useContext } from "react";
 import { cardContext } from "../context/context";
 import Footer from "./Footer";
+import { useEffect } from "react";
 
 const FinishingUp = () => {
   const value = useContext(cardContext);
+  console.log("Final Plan:-", value.totalBill);
+  console.log("Final AddOns:-", value.finalAddons);
+
+  // Extract the amount of the Selected Plan and store it into any array of object
+  const planAmount = value.totalBill.map((item) => {
+    return {
+      amountPerMonth: item.amountPerMonth,
+      amountPerYear: item.amountPerYear,
+    };
+  });
+
+  // Extract the amount of the Selected addOns and store it into any array of object
+  const addOnsPrice = value.finalAddons.map((item) => {
+    return {
+      amountPerMonth: item.addOnsPricePerMonth,
+      amountPerYear: item.addOnsPricePerYear,
+    };
+  });
+
+  // Function to extract the numerical value from the string
+  const extractAmount = (amountString) => {
+    return parseFloat(amountString.replace(/[^\d.-]/g, ""));
+  };
+
+  // User's choice (either 'PerMonth' or 'PerYear')
+  const timePeriod = value.toggle;
+  let totalAmount = 0;
+
+  function calculateAmount(timePeriod) {
+    let totalAmount = 0;
+    if (value.totalBill.length > 0 && value.finalAddons.length > 0) {
+      if (timePeriod === "left") {
+        totalAmount += extractAmount(planAmount[0].amountPerMonth);
+        addOnsPrice.forEach((addon) => {
+          totalAmount += extractAmount(addon.amountPerMonth);
+        });
+        return totalAmount;
+      } else if (timePeriod === "right") {
+        // Add per year amounts
+        totalAmount += extractAmount(planAmount[0].amountPerYear);
+        addOnsPrice.forEach((addon) => {
+          totalAmount += extractAmount(addon.amountPerYear);
+        });
+        return totalAmount;
+      }
+    } else {
+      console.log("");
+    }
+  }
+
+  // planAmount = [
+  //   {
+  //     amountPerMonth: "$9/mo",
+  //     amountPerYear: "$90/yr",
+  //   },
+  // ];
+
+  // addOnsPrice = [
+  //   {
+  //     amountPerMonth: "+$1/mo",
+  //     amountPerYear: "+$10/yr",
+  //   },
+  //   { amountPerMonth: "+$2/mo", amountPerYear: "+$20/yr" },
+  // ];
+
   return (
     <>
       <div
@@ -25,34 +91,64 @@ const FinishingUp = () => {
         {/* Main content */}
         <div className="mt-[3rem]">
           <ul className="flex flex-col gap-[1rem] p-[1.5rem] bg-[#fafbff] rounded-lg">
-            <li className="flex justify-between border-b-[2px] pb-[1.5rem]">
-              <div>
-                <p className="ubuntu-medium text-[#02295a]">Arcade(Monthly)</p>
-                <button className="underline ubuntu-regular text-[#9699ab] hover:text-[#473dff]">Change</button>
-              </div>
-              <div>
-                <p className="ubuntu-bold text-[#02295a]">$9/mo</p>
-              </div>
-            </li>
+            {/* Final Plan Summary Goes here */}
+            {value.totalBill.map((item) => {
+              return (
+                <li
+                  className="flex justify-between border-b-[2px] pb-[1.5rem]"
+                  key={item.planName}
+                >
+                  <div>
+                    <p className="ubuntu-medium text-[#02295a]">
+                      {item.planName}
+                      {value.toggle === "left" ? "(Monthly)" : "(Yearly)"}
+                    </p>
+                    <button className="underline ubuntu-regular text-[#9699ab] hover:text-[#473dff]">
+                      Change
+                    </button>
+                  </div>
 
-            <li className="flex justify-between">
-              <p className="ubuntu-regular text-[#9699ab]">Online Service</p>
-              <p className="ubuntu-regular text-[#02295a]">+$1/mo</p>
-            </li>
+                  <div>
+                    <p className="ubuntu-bold text-[#02295a]">
+                      {value.toggle === "left"
+                        ? `${item.amountPerMonth}`
+                        : `${item.amountPerYear}`}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
 
-            <li className="flex justify-between">
-              <p className="ubuntu-regular text-[#9699ab]">Larger Storage</p>
-              <p className="ubuntu-regular text-[#02295a]">+$2/mo</p>
-            </li>
+            {/* Final AddOns Summary Goes here */}
+            {value.finalAddons.map((item) => {
+              return (
+                <li className="flex justify-between" key={item.addOnName}>
+                  <p className="ubuntu-regular text-[#9699ab]">
+                    {item.addOnName}
+                  </p>
+                  <p className="ubuntu-regular text-[#02295a]">
+                    {value.toggle === "left"
+                      ? `${item.addOnsPricePerMonth}`
+                      : `${item.addOnsPricePerYear}`}
+                  </p>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
         <div className="flex justify-between p-[1rem]">
-          <p className="ubuntu-medium text-sm text-[#9699ab]">Total (per month)</p>
-          <p className="ubuntu-bold text-[#473dff]">+$12/mo</p>
+          <p className="ubuntu-medium text-sm text-[#9699ab]">
+            {value.toggle === "left" ? "Total (per month)" : "Total (per year)"}
+          </p>
+          <p className="ubuntu-bold text-[#473dff]">
+            {value.toggle === "left"
+              ? `$${calculateAmount(timePeriod)}/mo`
+              : `$${calculateAmount(timePeriod)}/yr`}
+          </p>
         </div>
 
-        <Footer/>
+        <Footer />
       </div>
     </>
   );

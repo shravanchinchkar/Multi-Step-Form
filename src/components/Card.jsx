@@ -4,6 +4,7 @@ import PersonalInfo from "./PersonalInfo";
 import Plan from "./Plan";
 import AddOns from "./AddOns";
 import FinishingUp from "./FinishingUp";
+import Thankyou from "./Thankyou";
 
 const Card = () => {
 
@@ -16,6 +17,7 @@ const Card = () => {
       <Plan/>
       <AddOns/>
       <FinishingUp/>
+      <Thankyou/>
     </div>
   );
 };

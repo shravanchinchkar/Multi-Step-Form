@@ -32,7 +32,7 @@ const SideBar = () => {
 
       <div className="m-[1rem] p-[2rem] w-[280px]  bg-[url('./assets/images/bg-sidebar-desktop.svg')] bg-no-repeat">
         <div className="flex flex-col gap-[1.5rem]">
-          {sideBarObject.map((item) => {
+          {sideBarObject.map((item, index) => {
             return (
               <div className="flex items-center gap-[20px]" key={item.value}>
                 <div

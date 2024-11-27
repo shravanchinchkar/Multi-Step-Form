@@ -1,12 +1,9 @@
 import React, { useContext } from "react";
 import { cardContext } from "../context/context";
 import Footer from "./Footer";
-import { useEffect } from "react";
 
 const FinishingUp = () => {
   const value = useContext(cardContext);
-  console.log("Final Plan:-", value.totalBill);
-  console.log("Final AddOns:-", value.finalAddons);
 
   // Extract the amount of the Selected Plan and store it into any array of object
   const planAmount = value.totalBill.map((item) => {
@@ -31,7 +28,6 @@ const FinishingUp = () => {
 
   // User's choice (either 'PerMonth' or 'PerYear')
   const timePeriod = value.toggle;
-  let totalAmount = 0;
 
   function calculateAmount(timePeriod) {
     let totalAmount = 0;
@@ -55,26 +51,17 @@ const FinishingUp = () => {
     }
   }
 
-  // planAmount = [
-  //   {
-  //     amountPerMonth: "$9/mo",
-  //     amountPerYear: "$90/yr",
-  //   },
-  // ];
-
-  // addOnsPrice = [
-  //   {
-  //     amountPerMonth: "+$1/mo",
-  //     amountPerYear: "+$10/yr",
-  //   },
-  //   { amountPerMonth: "+$2/mo", amountPerYear: "+$20/yr" },
-  // ];
+  const handlePlan = () => {
+    value.setsteps(2);
+  };
 
   return (
     <>
       <div
         className={
-          value.steps === 4
+          value.displayThankyou === true
+            ? "hidden"
+            : value.steps === 4
             ? "p-[3rem] w-[565px] h-[565px] m-[1rem] rounded-2xl"
             : "hidden"
         }
@@ -103,7 +90,10 @@ const FinishingUp = () => {
                       {item.planName}
                       {value.toggle === "left" ? "(Monthly)" : "(Yearly)"}
                     </p>
-                    <button className="underline ubuntu-regular text-[#9699ab] hover:text-[#473dff]">
+                    <button
+                      className="underline ubuntu-regular text-[#9699ab] hover:text-[#473dff]"
+                      onClick={handlePlan}
+                    >
                       Change
                     </button>
                   </div>
